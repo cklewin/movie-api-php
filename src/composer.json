@@ -1,0 +1,6 @@
+{
+    "require": {
+        "pmill/aws-cognito": "*"
+    }
+}
+
