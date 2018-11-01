@@ -49,9 +49,9 @@ switch($_SERVER['REQUEST_METHOD']) {
 		break;
 	case 'GET':
 		if (empty($movie_id)) {
-			listMovies();
+			getMovies();
 		} else {
-			showMovie($movie_id);
+			getMovie($movie_id);
 		}
 		break;
 	case 'PUT':

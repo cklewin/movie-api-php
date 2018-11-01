@@ -41,7 +41,7 @@ function createMovie() {
 	return true;
 }
 
-function listMovies() {
+function getMovies() {
 	echo 'TODO: listMovies';
 	/*
 	 * ask for limit + 1
@@ -54,7 +54,7 @@ function listMovies() {
 	return true;
 }
 
-function showMovie($movie_id) {
+function getMovie($movie_id) {
 	echo 'TODO: showMovie';
 	return true;
 }
