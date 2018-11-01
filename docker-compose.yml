@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+   db-dev:
+     image: mysql:5.7
+     volumes:
+       - db-dev-data:/var/lib/mysql
+     restart: always
+     env_file:
+       - develop.env
+
+   movie-api-php:
+     build: .
+     depends_on:
+       - db-dev
+     image: movie-api-php
+     volumes:
+       - ./src:/var/www
+     ports:
+       - "80:80"
+     restart: always
+     env_file:
+       - develop.env
+     environment:
+       MYSQL_HOST_WRITE: db-dev
+       MYSQL_HOST_READ: db-dev
+
+volumes:
+    db-dev-data:

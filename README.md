@@ -18,11 +18,10 @@ See [TODO.md](doc/TODO.md)
 Install PHP requirements with composer
 `./composer-install.sh`
 
-Build Docker image
-`docker build -t movie-api-php .`
+Start the Docker services
+`docker-compose up`
 
-Start Docker container
-`docker run -p 80:80 -d -v $(pwd)/src:/var/www movie-api-php`
+This will start a MySQL server for development and a web server at http://localhost/
 
 ## API usage
 See [USAGE.md](doc/USAGE.md)
