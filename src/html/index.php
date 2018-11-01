@@ -1,6 +1,7 @@
 <?php
 require(__DIR__ . '/../vendor/autoload.php');
-include(__DIR__ . '/../include/functions.inc.php');
+require(__DIR__ . '/../include/Database.class.php');
+require(__DIR__ . '/../include/functions.inc.php');
 
 /*
  * through the use of JWT and token in HTTP Authentication header

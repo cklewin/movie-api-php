@@ -43,6 +43,14 @@ function createMovie() {
 
 function listMovies() {
 	echo 'TODO: listMovies';
+	/*
+	 * ask for limit + 1
+	 * if the number returned is greater than our limit
+	 * set the pager to say there are more results
+	 * remove the last result
+	 *
+	 */
+
 	return true;
 }
 
