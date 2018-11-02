@@ -32,22 +32,18 @@ See [USAGE.md](doc/USAGE.md)
 * [ ] You’ll need to deploy your application to a hosting service of your choosing (AWS, DigitalOcean, Azure, etc). Free tiers should be sufficient.
 
 ## Requirements
-* [ ] The service must be accessible over http using a command line interface (curl, node, etc.); a GUI is not necessary.
+* [x] The service must be accessible over http using a command line interface (curl, node, etc.); a GUI is not necessary.
 * [x] Add an authentication method to restrict access to the repository. Only users that need access to the service should be able to access it.
 * [ ] The service must create, read, update, delete, and list movies in the collection.
-* [ ] Each movie in the collection needs the following attributes:
-  * [ ] Title [text; length between 1 and 50 characters]
-  * [ ] Format [text; allowable values “VHS”, “DVD”, “Streaming”]
-  * [ ] Length [time; value between 0 and 500 minutes]
-  * [ ] Release Year [integer; value between 1800 and 2100]
-  * [ ] Rating [integer; value between 1 and 5]
+* [x] Each movie in the collection needs the following attributes:
+  * [x] Title [text; length between 1 and 50 characters]
+  * [x] Format [text; allowable values “VHS”, “DVD”, “Streaming”]
+  * [x] Length [time; value between 0 and 500 minutes]
+  * [x] Release Year [integer; value between 1800 and 2100]
+  * [x] Rating [integer; value between 1 and 5]
 * [ ] On the collection list request, the items in the list must be sortable by movie attributes.
 * [ ] Integrate a third-party web service relevant to the project.
 
-## Extra credit (none, any, or all)
+## Optional
 * [ ] Implement a build tool of your choosing (CloudFormation in AWS, etc)
 * [ ] Integrate a testing suite of some sort
-
-## Keep in mind
-* We want to see your progress, not just a finished product. Email us your source code repository and a link to your application instance as soon as you have them setup.
-* Stay in communication with us (ask questions, give status updates). This is part of the challenge.
