@@ -97,6 +97,7 @@ http://localhost/api/v1/movies/1
 ```
 
 ### Update a movie
+```
 curl --header "Authentication: Bearer "$MOVIE_API_TOKEN \
 -X PUT \
 -H "Content-Type: application/x-www-form-urlencoded" \
