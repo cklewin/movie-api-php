@@ -22,9 +22,9 @@ function createMovie($title, $username, $format, $length, $release_year, $rating
 	}
 
 	$db = new Database('write');
-	$res = $db->write('INSERT INTO movies (owner,title,format,length,release_year,rating) VALUES (?,?,?,?,?,?)', 'sssiii', array($username,$title,$format,$length,$release_year,$rating));
+	$movie_id = $db->write('INSERT INTO movies (owner,title,format,length,release_year,rating) VALUES (?,?,?,?,?,?)', 'sssiii', array($username,$title,$format,$length,$release_year,$rating));
 
-	if (!$res) {
+	if (!$movie_id) {
 		$response['http_status'] = 500;
 		$response['messages'][] = 'failed to create movie';
 		return($response);
@@ -32,7 +32,7 @@ function createMovie($title, $username, $format, $length, $release_year, $rating
 
 	$response['http_status'] = 201;
 	$response['messages'][] = 'movie created successfully';
-	$response['movie_id'] = $res['id'];
+	$response['movie_id'] = $movie_id;
 	$response['success'] = true;
 
 	return $response;
