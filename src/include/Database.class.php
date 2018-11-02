@@ -82,7 +82,7 @@ class Database {
 		}
 
 		$stmt->close();
-		return true;
+		return $this->mysqli->insert_id;
 	}
 }
 
