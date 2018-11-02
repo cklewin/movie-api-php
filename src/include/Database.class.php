@@ -82,7 +82,7 @@ class Database {
 		}
 
 		$stmt->close();
-		return $this->mysqli->insert_id;
+		return $this->mysqli->insert_id ?: $this->mysqli->affected_rows;
 	}
 }
 

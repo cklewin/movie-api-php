@@ -38,6 +38,62 @@ function createMovie($title, $username, $format, $length, $release_year, $rating
 	return $response;
 }
 
+function updateMovie($username, $movie_id, $args) {
+        $response =array(
+                'http_status'   => null,
+                'messages'      => array(),
+                'success'       => false,
+        );
+
+	/*
+	 * store movie data before change for comparison
+	 *
+	 */
+	$res_getMovie = getMovie($movie_id);
+	if (!$res_getMovie['success']) {
+		return $res_getMovie;
+	}
+	$movie_data_original = $res_getMovie['data'][0];
+
+	/*
+	 * merge new changes into the original data
+	 *
+	 */
+	$movie_data_new = array_merge($movie_data_original, $args);
+
+        if (empty(array_diff($movie_data_original, $movie_data_new))) {
+		$response = array_merge($response, $res_getMovie);
+                $response['http_status'] = 200;
+                $response['messages'][] = 'no changes detected';
+                return($response);
+        }
+
+        $res = sanitizeMovieParams($movie_data_new);
+        if ($res['success'] != true) {
+                $response['http_status'] = 400;
+                $response['messages'] = array_merge($response['messages'], $res['messages']);
+                return($response);
+        }
+
+        $db = new Database('write');
+        $res = $db->write('UPDATE movies SET owner=?, title=?, format=?, length=?, release_year=?, rating=? where id=?', 'sssiiii', array($username,$movie_data_new['title'],$movie_data_new['format'],$movie_data_new['length'],$movie_data_new['release_year'],$movie_data_new['rating'],$movie_id));
+	if (!$res) {
+                $response['http_status'] = 500;
+                $response['messages'][] = 'failed to update movie';
+                return($response);
+        }
+
+        $response['http_status'] = 201;
+        $response['messages'][] = 'movie updated successfully';
+        $response['success'] = true;
+
+        return $response;
+}
+
+function deleteMovie($movie_id) {
+	return true;
+}
+
 function getMovies() {
 	$response = array(
 		'http_status'	=> null,
@@ -93,15 +149,6 @@ function getMovie($movie_id) {
 	return $response;
 }
 
-function updateMovie($movie_id) {
-	echo 'TODO: updateMovie';
-	return true;
-}
-
-function deleteMovie() {
-	return true;
-}
-
 function sanitizeMovieParams($args) {
 	$response =array(
 		'messages'	=> array(),
@@ -116,7 +163,6 @@ function sanitizeMovieParams($args) {
 		$insane = true;
 		$response['messages'][] = 'invalid value for movie_id, expected an integer';
 	}
-
 	if (!empty($args['username']) &&
 		!preg_match('/^[a-zA-Z0-9]+/', $username)
 		) {
@@ -124,12 +170,11 @@ function sanitizeMovieParams($args) {
 		$response['messages'][] = 'invalid username, expected alphanumeric string';
 	}
 	if (!empty($args['title']) &&
-		(!is_numeric($args['title'])
-		|| strlen($args['title']) < MOVIE_CONSTRAINTS['title']['min']
-		|| strlen($args['title']) > MOVIE_CONSTRAINTS['title']['max']
+		(strlen($args['title']) < MOVIE_CONSTRAINTS['title_length']['min']
+		|| strlen($args['title']) > MOVIE_CONSTRAINTS['title_length']['max']
 		)) {
 		$insane = true;
-		$response['messages'][] = 'invalid value for title, maximum characters allowed is ' . MOVIE_CONSTRAINTS['title']['max'];
+		$response['messages'][] = 'invalid value for title, maximum characters allowed is ' . MOVIE_CONSTRAINTS['title_length']['max'];
 	}
 	if (!empty($args['format']) &&
 		!in_array($args['format'], MOVIE_CONSTRAINTS['format_list'])

@@ -77,17 +77,11 @@ function compileRoute() {
 
 	/*
 	 * verify the movie id if it was passed
+	 * there should be no sanitizing here, do that before usage
 	 *
 	 */
 	if (!empty($path_parts[4])) {
-		$movie_id = $path_parts[4];
-		$res = getMovie($movie_id);
-		if (!$res['success']) {
-			$response['http_status'] = $res['http_status'];
-			$response['messages'] = array_merge($response['messages'], $res['messages']);
-			return $response;
-		}
-		$response['movie_id'] = $movie_id;
+		$response['movie_id'] = $path_parts[4];
 	}
 
 	$response['success'] = true;
@@ -119,8 +113,7 @@ function routeRequest($username, $movie_id) {
 				return($response);
 			}
 
-			$response = createMovie($_POST['title'], $username, $_POST['format'], $_POST['length'], $_POST['release_year'], $_POST['rating']);
-			return $response;
+			return createMovie($_POST['title'], $username, $_POST['format'], $_POST['length'], $_POST['release_year'], $_POST['rating']);
 
 		case 'GET':
 			if (empty($movie_id)) {
@@ -128,8 +121,19 @@ function routeRequest($username, $movie_id) {
 			} else {
 				return getMovie($movie_id);
 			}
+
 		case 'PUT':
-			return updateMovie($movie_id);
+			parse_str(file_get_contents('php://input'), $_PUT);
+			if (empty($_PUT)) {
+				$response = array(
+					'http_status'	=> 400,
+					'messages'	=> array(),
+					'success'	=> false
+				);
+				$response['messages'][] = 'missing at least one parameter';
+				return($response);
+			}
+			return updateMovie($username, $movie_id, $_PUT);
 
 		case 'DELETE':
 			return deleteMovie($movie_id);
