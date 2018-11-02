@@ -8,7 +8,7 @@ The API will respond in JSON.
 
 ## Methods
 * Create a movie
-curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: application/x-www-form-urlencoded" -X POST -d "title=Star Wars&format=VHS&length=127&release_year=19761&rating=5" http://localhost/api/v1/movies/
+curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: application/x-www-form-urlencoded" -X POST -d "title=Star Wars&format=VHS&length=127&release_year=19761&rating=5" http://localhost/api/v1/movies
 - parameters: (all required)
   - title
     - (text, max 50 characters)
