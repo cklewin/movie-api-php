@@ -2,13 +2,19 @@ Login to the [cognito user pool](https://cklewin-movieapi.auth.us-east-1.amazonc
 
 You'll be redirected to a new URL after signing in, copy the value of the access_token query string parameter to pass in with the HTTP "Authentication" header.
 
-`MOVIE_API_TOKEN=[access_token]`
+`MOVIE_API_TOKEN=<access_token>`
 
 The API will respond in JSON.
 
 ## Methods
 ### Create a movie
-curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: application/x-www-form-urlencoded" -X POST -d "title=Star Wars&format=VHS&length=127&release_year=19761&rating=5" http://localhost/api/v1/movies
+```
+curl --header "Authentication: Bearer "$MOVIE_API_TOKEN \
+-X POST \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d "title=Star Wars&format=VHS&length=127&release_year=1976&rating=5" \
+http://localhost/api/v1/movies
+```
 - parameters: (all required)
   - title
     - (text, max 50 characters)
@@ -20,7 +26,7 @@ curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: applic
     - (integer between 1800 and 2100)
   - rating
     - (integer between 1 and 5)
-- JSON response:
+- JSON response
 ```
 {
     "messages": [
@@ -32,16 +38,22 @@ curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: applic
 ```
 
 ### List all movies
-`curl --header "Authentication: Bearer "$MOVIE_API_TOKEN http://localhost/api/v1/movies`
-- parameters:
+```
+curl --header "Authentication: Bearer "$MOVIE_API_TOKEN \
+http://localhost/api/v1/movies
+```
+- parameters
   - sort_field
     - \(optional) default title
     - options [title|etc]
   - sort_dir
     - \(optional) default value: asc
     - options [asc|desc]
-  - `curl --header "Authentication: Bearer "$MOVIE_API_TOKEN http://localhost/api/v1/movies?sort_field=title&sort_dir=desc`
-- JSON response:
+  - ```
+curl --header "Authentication: Bearer "$MOVIE_API_TOKEN \
+http://localhost/api/v1/movies?sort_field=title&sort_dir=desc
+```
+- JSON response
 ```
 {
     "success": true,
@@ -67,8 +79,11 @@ curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: applic
 ```
 
 ### Read a movie
-`curl --header "Authentication: Bearer "$MOVIE_API_TOKEN http://localhost/api/v1/movies/1`
-- JSON response:
+```
+curl --header "Authentication: Bearer "$MOVIE_API_TOKEN \
+http://localhost/api/v1/movies/1
+```
+- JSON response
 ```
 {
     "success": true,
@@ -86,7 +101,12 @@ curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: applic
 ```
 
 ### Update a movie
-curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: application/x-www-form-urlencoded" -X PUT -d "release_year=1972&rating=4" http://localhost/api/v1/movies/24
+curl --header "Authentication: Bearer "$MOVIE_API_TOKEN \
+-X PUT \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d "release_year=1972&rating=4" \
+http://localhost/api/v1/movies/24
+```
 - parameters: (at least one required)
   - title
     - (text, max 50 characters)
@@ -98,7 +118,7 @@ curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: applic
     - (integer between 1800 and 2100)
   - rating
     - (integer between 1 and 5)
-- JSON response:
+- JSON response
 ```
 {
     "messages": [
@@ -109,12 +129,16 @@ curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: applic
 ```
 
 ### Delete a movie
-curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -X DELETE http://localhost/api/v1/movies/24
-- JSON response:
+```
+curl --header "Authentication: Bearer "$MOVIE_API_TOKEN \
+-X DELETE \
+http://localhost/api/v1/movies/24
+```
+- JSON response
 ```
 {
     "messages": [
-        "movie delete"
+        "movie deleted"
     ],
     "success": true
 }
