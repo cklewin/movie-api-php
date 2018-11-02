@@ -5,12 +5,12 @@
 - [ ] Amazon RDB
 - [x] AWS Cognito user pool for testing
 
-- [ ] Build working API
-  - [ ] Authorize user
-  - [ ] Sanitize inputs
-  - [ ] Verify input parameters
-  - [ ] Respond to API methods (Create, Read, Update, Delete, List)
-  - [ ] Save changes to database
+- [x] Build working API
+  - [x] Authorize user
+  - [x] Sanitize inputs
+  - [x] Verify input parameters
+  - [x] Respond to API methods (Create, Read, Update, Delete, List)
+  - [x] Save changes to database
 
 - [x] Restrict API access to authenticated users
   - [x] AWS Cognito user pool

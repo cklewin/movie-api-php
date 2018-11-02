@@ -34,7 +34,7 @@ See [USAGE.md](doc/USAGE.md)
 ## Requirements
 * [x] The service must be accessible over http using a command line interface (curl, node, etc.); a GUI is not necessary.
 * [x] Add an authentication method to restrict access to the repository. Only users that need access to the service should be able to access it.
-* [ ] The service must create, read, update, delete, and list movies in the collection.
+* [x] The service must create, read, update, delete, and list movies in the collection.
 * [x] Each movie in the collection needs the following attributes:
   * [x] Title [text; length between 1 and 50 characters]
   * [x] Format [text; allowable values “VHS”, “DVD”, “Streaming”]
