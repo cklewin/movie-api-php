@@ -32,6 +32,7 @@
 - Caching will increase performance, memcached
 - Needs centralized logging and monitoring
 - Rate limiting should be enabled to prevent abuse
+- The API only cares about the base URL, so trailing slashes and other parts in the path are silently ignored - an error message would be a good idea to maintain consistency
 - SSL encryption should be enabled
   - Self-signed certificate
   - Letsencrypt
