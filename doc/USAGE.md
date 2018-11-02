@@ -4,8 +4,32 @@ You'll be redirected to a new URL after signing in, copy the value of the access
 
 `MOVIE_API_TOKEN=[access_token]`
 
+The API will respond in JSON.
+
 ## Methods
 * Create a movie
+curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: application/x-www-form-urlencoded" -X POST -d "title=Star Wars&format=VHS&length=127&release_year=19761&rating=5" http://localhost/api/v1/movies/
+- parameters: (all required)
+  - title
+    - (text, max 50 characters)
+  - format
+    - one of (DVD|VHS|Streaming)
+  - length
+    - (integer between 0 and 500)
+  - release_year
+    - (integer between 1800 and 2100)
+  - rating
+    - (integer between 1 and 5)
+- JSON response:
+```
+{
+    "messages": [
+        "movie created successfully"
+    ],
+    "success": true,
+    "movie_id": 24
+}
+```
 
 * List all movies
 `curl --header "Authentication: Bearer "$MOVIE_API_TOKEN http://localhost/api/v1/movies`
@@ -17,9 +41,49 @@ You'll be redirected to a new URL after signing in, copy the value of the access
     - \(optional) default value: asc
     - options [asc|desc]
   - `curl --header "Authentication: Bearer "$MOVIE_API_TOKEN http://localhost/api/v1/movies?sort_field=title&sort_dir=desc`
+- JSON response:
+```
+{
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "title": "Star Wars",
+            "format": "VHS",
+            "length": 243,
+            "release_year": 1976,
+            "rating": 5
+        },
+        {
+            "id": 2,
+            "title": "Lord of the Rings",
+            "format": "DVD",
+            "length": 359,
+            "release_year": 2001,
+            "rating": 4
+        }
+    ]
+}
+```
 
 * Read a movie
-`curl --header "Authentication: Bearer "$MOVIE_API_TOKEN http://localhost/api/v1/movies/1/`
+`curl --header "Authentication: Bearer "$MOVIE_API_TOKEN http://localhost/api/v1/movies/1`
+- JSON response:
+```
+{
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "title": "Star Wars",
+            "format": "VHS",
+            "length": 243,
+            "release_year": 1976,
+            "rating": 5
+        }
+    ]
+}
+```
 
 * Update a movie
 
