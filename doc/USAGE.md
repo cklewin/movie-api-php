@@ -45,14 +45,10 @@ http://localhost/api/v1/movies
 - parameters
   - sort_field
     - \(optional) default title
-    - options [title|etc]
+    - options (title|etc)
   - sort_dir
     - \(optional) default value: asc
-    - options [asc|desc]
-  - ```
-curl --header "Authentication: Bearer "$MOVIE_API_TOKEN \
-http://localhost/api/v1/movies?sort_field=title&sort_dir=desc
-```
+    - options (asc|desc)
 - JSON response
 ```
 {
