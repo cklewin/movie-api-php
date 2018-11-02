@@ -28,7 +28,7 @@ function createMovie($username, $args) {
 	}
 
 	$response['http_status'] = 201;
-	$response['messages'][] = 'movie created successfully';
+	$response['messages'][] = 'movie created';
 	$response['movie_id'] = $movie_id;
 	$response['success'] = true;
 
@@ -84,14 +84,37 @@ function updateMovie($username, $movie_id, $args) {
         }
 
         $response['http_status'] = 202;
-        $response['messages'][] = 'movie updated successfully';
+        $response['messages'][] = 'movie updated';
         $response['success'] = true;
 
         return $response;
 }
 
 function deleteMovie($movie_id) {
-	return true;
+        $response =array(
+                'http_status'   => null,
+                'messages'      => array(),
+                'success'       => false,
+        );
+
+	$res_getMovie = getMovie($movie_id);
+	if (!$res_getMovie['success']) {
+		return $res_getMovie;
+	}
+
+        $db = new Database('write');
+        $res = $db->write('DELETE FROM movies WHERE id=?', 'i', array($movie_id));
+	if (!$res) {
+                $response['http_status'] = 500;
+                $response['messages'][] = 'failed to delete movie';
+                return($response);
+        }
+
+        $response['http_status'] = 202;
+        $response['messages'][] = 'movie deleted';
+        $response['success'] = true;
+
+	return $response;
 }
 
 function getMovies() {

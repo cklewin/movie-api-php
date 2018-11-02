@@ -7,7 +7,7 @@ You'll be redirected to a new URL after signing in, copy the value of the access
 The API will respond in JSON.
 
 ## Methods
-* Create a movie
+### Create a movie
 curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: application/x-www-form-urlencoded" -X POST -d "title=Star Wars&format=VHS&length=127&release_year=19761&rating=5" http://localhost/api/v1/movies
 - parameters: (all required)
   - title
@@ -24,14 +24,14 @@ curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: applic
 ```
 {
     "messages": [
-        "movie created successfully"
+        "movie created"
     ],
     "success": true,
     "movie_id": 24
 }
 ```
 
-* List all movies
+### List all movies
 `curl --header "Authentication: Bearer "$MOVIE_API_TOKEN http://localhost/api/v1/movies`
 - parameters:
   - sort_field
@@ -66,7 +66,7 @@ curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: applic
 }
 ```
 
-* Read a movie
+### Read a movie
 `curl --header "Authentication: Bearer "$MOVIE_API_TOKEN http://localhost/api/v1/movies/1`
 - JSON response:
 ```
@@ -85,6 +85,37 @@ curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: applic
 }
 ```
 
-* Update a movie
+### Update a movie
+curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -H "Content-Type: application/x-www-form-urlencoded" -X PUT -d "release_year=1972&rating=4" http://localhost/api/v1/movies/24
+- parameters: (at least one required)
+  - title
+    - (text, max 50 characters)
+  - format
+    - one of (DVD|VHS|Streaming)
+  - length
+    - (integer between 0 and 500)
+  - release_year
+    - (integer between 1800 and 2100)
+  - rating
+    - (integer between 1 and 5)
+- JSON response:
+```
+{
+    "messages": [
+        "movie updated"
+    ],
+    "success": true
+}
+```
 
-* Delete a movie
+### Delete a movie
+curl --header "Authentication: Bearer "$MOVIE_API_TOKEN -X DELETE http://localhost/api/v1/movies/24
+- JSON response:
+```
+{
+    "messages": [
+        "movie delete"
+    ],
+    "success": true
+}
+```
