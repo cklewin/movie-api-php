@@ -20,9 +20,6 @@ pipeline {
         }
         stage('Build') {
             steps {
-                // TODO: need to pass environment vars for production database
-                //	- use Jenkins credentials?
-                //	- use docker secrets?
                 sh '${SSH_CMD} "cd ~/${BUILD_FOLDER} && ./composer-install.sh"'
                 sh '${SSH_CMD} "docker build -t ${IMAGE_NAME} ~/${BUILD_FOLDER}"'
             }
@@ -30,6 +27,7 @@ pipeline {
         stage('Test') {
             environment {
                 RUNNING_CONTAINER = sh(returnStdout: true, script: '${SSH_CMD} "docker container ls -f publish=8080/tcp -q"').trim()
+		MYSQL_PASSWORD = credentials('MYSQL_PASSWORD') 
             }
             steps {
                 script {
@@ -42,7 +40,7 @@ pipeline {
                         exit 1
                     }
                 }
-                sh '${SSH_CMD} "docker run -d --rm --name ${IMAGE_NAME} -p 8080:80 ${IMAGE_NAME}"'
+                sh '${SSH_CMD} "docker run -d -e \'MYSQL_HOST_READ=${MYSQL_HOST_READ}\' -e \'MYSQL_HOST_WRITE=${MYSQL_HOST_WRITE}\' -e \'MYSQL_USER=${MYSQL_USER}\' -e \'MYSQL_PASSWORD=${MYSQL_PASSWORD}\' --rm --name ${IMAGE_NAME} -p 8080:80 ${IMAGE_NAME}"'
                 sh 'sleep 10'
                 // TODO: add a retry to test for port 8080 connection
                 // TODO: run curl tests
@@ -64,6 +62,7 @@ pipeline {
             environment {
                 // get original deploy container
                 PREVIOUS_CONTAINER = sh(returnStdout: true, script: '${SSH_CMD} "docker container ls -f publish=80/tcp -q"').trim()
+		MYSQL_PASSWORD = credentials('MYSQL_PASSWORD') 
             }
             steps {
                 script {
@@ -74,7 +73,7 @@ pipeline {
                     }
                 }
                 // start new container
-                sh '${SSH_CMD} "docker run -d --name ${IMAGE_NAME} -p 80:80 ${IMAGE_NAME}"'
+                sh '${SSH_CMD} "docker run -d -e \'MYSQL_HOST_READ=${MYSQL_HOST_READ}\' -e \'MYSQL_HOST_WRITE=${MYSQL_HOST_WRITE}\' -e \'MYSQL_USER=${MYSQL_USER}\' -e \'MYSQL_PASSWORD=${MYSQL_PASSWORD}\' --name ${IMAGE_NAME} -p 80:80 ${IMAGE_NAME}"'
 
                 // TODO: run final tests
 

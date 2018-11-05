@@ -80,6 +80,13 @@ sudo chmod 700 ~docker
 sudo chmod 500 ~docker/.ssh
 sudo chmod 400 ~docker/.ssh/authorized_keys
 ```
+- Connect to RDS to initialize the MySQL database
+```
+docker run -it --rm mysql mysql -hyour_RDS-endpoint -uyour_RDS-master-username -p
+create database movies;
+grant all privileges on movies.* to movies identified by '<YOUR_MYSQL_PASSWORD>';
+flush privileges;
+```
 
 ## 5. Configure Jenkins 
 Follow the container logs on the jenkins-node instance to get the Jenkins unlock key
@@ -97,6 +104,9 @@ Go to http://your_jenkins-node_public_ip
   - Manage Jenkins
     - Configure System
       - Global properties
+       - Add "MYSQL_HOST_WRITE"=your_RDS-endpoint
+       - Add "MYSQL_HOST_READ"=your_RDS-endpoint
+       - Add "MYSQL_USER"=movies
        - Add "DEPLOY_HOST"=your_web-node_private-ip
        - Add "DEPLOY_USER"=docker
       - System Admin email address: email@example.com
@@ -118,6 +128,14 @@ Go to http://your_jenkins-node_public_ip
                 - Discover branches strategy: Exclude branches that are also filed as PRs
                 - Discover pull requests from origin: (Delete this)
                 - Discover pull requests from forks: (Delete this)
+    - Credentials
+      - movie-api-php
+        - Global credentials
+          - Add Credentials
+            - Kind: Secret text
+            - Secret: <YOUR_MYSQL_PASSWORD>
+            - ID: MYSQL_PASSWORD
+
     - Save
 
 ## Notes
