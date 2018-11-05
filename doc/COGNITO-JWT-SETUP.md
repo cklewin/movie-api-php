@@ -1,31 +1,30 @@
 We'll be using JWT to authorize access to the Movie API.
 
-The user login is outside the scope of this project, so we'll setup a Cognito user pool to provide a simple login service the will generate the JWT.  These steps are here just to get going quickly, not recommended for production.
+The user login is outside the scope of this project, so we'll setup a Cognito user pool to provide a login service that will generate the JWT.  These steps are here just to get going quickly, not recommended for production.
 
 ## Create AWS Cognito user pool
-- AWS Console -> Cognito
-  - Create a user pool
-    - Pool name: movie-api
-    - Step through settings
-      - Attributes:
-        - Uncheck "email"
-      - Policies:
-        - Uncheck all required
-        - Select "Only allow administrators to create users"
-        - Days to expire: 14
-    - App clients
-      - Add an app client
-        - App client name: movie-api
-        - Uncheck "Generate client secret"
-    - Review
+- AWS Console
+  - Cognito
+    - Create a user pool
+      - Pool name: movie-api
+      - Step through settings
+        - Attributes:
+          - Uncheck "email"
+        - Policies:
+          - Uncheck all required
+          - Select "Only allow administrators to create users"
+          - Days to expire: 14
+      - App clients
+        - Add an app client
+          - App client name: movie-api
+          - Uncheck "Generate client secret"
+      - Review
         - Create pool
-
   - App client settings
     - Check "Cognito user pool"
     - Callback URLs: https://cklewin-movieapi.auth.us-east-1.amazoncognito.com/
     - Check "Implicit grant"
     - Save changes
-
   - Domain name
     - Domain prefix: cklewin-movieapi
     - Save changes

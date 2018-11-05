@@ -29,7 +29,7 @@ See [USAGE.md](doc/USAGE.md)
 ## Exercise overview
 * [x] Start by briefly documenting the technology stack of your choosing. Let us know what component you’ve chosen for each layer and why.
 * [x] Setup a source code repository where we can watch your progress. GitHub or Bitbucket are fine.
-* [ ] You’ll need to deploy your application to a hosting service of your choosing (AWS, DigitalOcean, Azure, etc). Free tiers should be sufficient.
+* [x] You’ll need to deploy your application to a hosting service of your choosing (AWS, DigitalOcean, Azure, etc). Free tiers should be sufficient.
 
 ## Requirements
 * [x] The service must be accessible over http using a command line interface (curl, node, etc.); a GUI is not necessary.
