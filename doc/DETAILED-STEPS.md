@@ -106,6 +106,7 @@ Go to http://your_jenkins-node_public_ip
       - Global properties
        - Add "MYSQL_HOST_WRITE"=your_RDS-endpoint
        - Add "MYSQL_HOST_READ"=your_RDS-endpoint
+       - Add "MYSQL_DATABASE"=movies
        - Add "MYSQL_USER"=movies
        - Add "DEPLOY_HOST"=your_web-node_private-ip
        - Add "DEPLOY_USER"=docker
