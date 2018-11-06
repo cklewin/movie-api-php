@@ -27,8 +27,9 @@ function sanitizeMovieParams($args, $required=array()) {
 	}
 
 	if (!empty($args['movie_id']) &&
-		!is_integer($args['movie_id'])
-		) {
+		(!is_integer($args['movie_id'])
+		&& !ctype_digit($args['movie_id'])
+		)) {
 		$insane = true;
 		$response['messages'][] = 'invalid movie_id: expected integer';
 	}

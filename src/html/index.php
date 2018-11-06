@@ -37,7 +37,7 @@ if (!$res['success']) {
 	echo json_encode($response, JSON_PRETTY_PRINT);
 	return false;
 }
-$movie_id = $res['movie_id'] ?: 0;
+$movie_id = $res['movie_id'] ?: null;
 
 /*
  * route the request and output the response
