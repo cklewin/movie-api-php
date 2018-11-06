@@ -40,6 +40,15 @@ function compileRoute() {
 function routeRequest($username, $movie_id) {
 	switch($_SERVER['REQUEST_METHOD']) {
 		case 'POST':
+			if (!empty($movie_id)) {
+				$response = array(
+					'http_status'	=> 400,
+					'messages'	=> array(),
+					'success'	=> false
+				);
+				$response['messages'][] = 'POST method does not accept a movie_id, use PUT to update an existing movie';
+				return($response);
+			}
 			return createMovie($username, $_POST);
 
 		case 'GET':
