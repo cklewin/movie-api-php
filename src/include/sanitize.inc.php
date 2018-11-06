@@ -50,7 +50,8 @@ function sanitizeMovieParams($args, $required=array()) {
 	}
 
 	if (!empty($args['length']) &&
-		(!is_integer($args['length'])
+		((!is_integer($args['length'])
+		&& !ctype_digit($args['length']))
 		|| $args['length'] < MOVIE_CONSTRAINTS['length']['min']
 		|| $args['length'] > MOVIE_CONSTRAINTS['length']['max']
 		)) {
@@ -59,7 +60,8 @@ function sanitizeMovieParams($args, $required=array()) {
 	}
 
 	if (!empty($args['release_year']) &&
-		(!is_integer($args['release_year'])
+		((!is_integer($args['release_year'])
+		&& !ctype_digit($args['release_year']))
 		|| $args['release_year'] < MOVIE_CONSTRAINTS['release_year']['min']
 		|| $args['release_year'] > MOVIE_CONSTRAINTS['release_year']['max']
 		)) {
@@ -68,7 +70,8 @@ function sanitizeMovieParams($args, $required=array()) {
 	}
 
 	if (!empty($args['rating']) &&
-		(!is_integer($args['rating'])
+		((!is_integer($args['rating'])
+		&& !ctype_digit($args['rating']))
 		|| $args['rating'] < MOVIE_CONSTRAINTS['rating']['min']
 		|| $args['rating'] > MOVIE_CONSTRAINTS['rating']['max']
 		)) {
