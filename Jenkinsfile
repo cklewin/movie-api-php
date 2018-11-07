@@ -42,7 +42,6 @@ pipeline {
                     }
                 }
                 sh '${SSH_CMD} "docker run -d -e \'MYSQL_HOST_READ=${MYSQL_HOST_READ}\' -e \'MYSQL_HOST_WRITE=${MYSQL_HOST_WRITE}\' -e \'MYSQL_DATABASE=${MYSQL_DATABASE}\' -e \'MYSQL_USER=${MYSQL_USER}\' -e \'MYSQL_PASSWORD=${MYSQL_PASSWORD}\' --rm --name ${IMAGE_NAME} -p 8080:80 ${IMAGE_NAME}"'
-                sh 'sleep 10'
                 // TODO: add a retry to test for port 8080 connection
                 // TODO: run curl tests
                 // TODO: how will we test JWT authentication?
