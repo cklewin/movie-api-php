@@ -1,8 +1,9 @@
 <?php
 
-if ((empty($_ENV['MYSQL_HOST_WRITE']) && empty($_ENV['MYSQL_HOST_WRITE']))
-	|| empty($_ENV['MYSQL_USER'])
-	|| empty($_ENV['MYSQL_PASSWORD'])) {
+if ((empty($_ENV['MYSQL_HOST_WRITE']) && empty($_ENV['MYSQL_HOST_WRITE'])) ||
+	empty($_ENV['MYSQL_USER']) ||
+	empty($_ENV['MYSQL_PASSWORD'])
+	) {
 	die('missing environment variables for database connection');
 }
 
