@@ -20,7 +20,7 @@ function sanitizeMovieParams($args, $required=array()) {
 	}
 
 	if (!empty($args['username']) &&
-		!preg_match('/^[a-zA-Z0-9]+/', $username)
+		!ctype_alnum($args['username'])
 		) {
 		$insane = true;
 		$response['messages'][] = 'invalid username: expected alphanumeric string';
