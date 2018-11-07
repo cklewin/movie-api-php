@@ -20,7 +20,8 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh '${SSH_CMD} "cd ~/${BUILD_FOLDER} && ./composer-install.sh"'
+                // this step is only needed if the src/vendor folder is left out of the repo
+                //sh '${SSH_CMD} "cd ~/${BUILD_FOLDER} && ./composer-install.sh"'
                 sh '${SSH_CMD} "docker build -t ${IMAGE_NAME} ~/${BUILD_FOLDER}"'
             }
         }
@@ -50,7 +51,7 @@ pipeline {
                 echo 'Run tests'
                 sh '${SSH_CMD} "docker stop ${IMAGE_NAME}"'
 
-                // this should always run if we built the image - unless the branch is master
+                // this should always run if we built the image - unless the branch is master, then we'll keep it for production deployment
                 //script {
                 //}
             }
