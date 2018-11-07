@@ -148,6 +148,12 @@ function getMovie($movie_id) {
 		'success'	=> false,
 	);
 
+	if (empty($movie_id)) {
+                $response['http_status'] = 400;
+                $response['messages'][] = 'movie_id is required';
+                return($response);
+	}
+
 	$res = sanitizeMovieParams(array(
 		'movie_id' => $movie_id,
 	));
