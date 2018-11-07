@@ -36,7 +36,7 @@
 - Using nginx as the front end for PHP will have better performance
 - Caching will increase performance, memcached
 - Rate limiting should be enabled to prevent abuse
-- The Docker image rebuilds the PHP composer requirements.  This takes time and I don't think this is necessary and would be better to include the /vendor folder in the repo.
+- ~~The Docker image rebuilds the PHP composer requirements.  This takes time and I don't think this is necessary and would be better to include the /vendor folder in the repo.~~
 - The API only cares about the base URL, so trailing slashes and other parts in the path are silently ignored - an error message would be a good idea to maintain consistency
 - Needs centralized logging and monitoring
 - SSL encryption should be enabled
