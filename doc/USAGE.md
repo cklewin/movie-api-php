@@ -15,17 +15,19 @@ curl --header "Authentication: Bearer "$MOVIE_API_TOKEN \
 -d "title=Star Wars&format=VHS&length=127&release_year=1976&rating=5" \
 http://localhost/api/v1/movies
 ```
-- parameters: (all required)
-  - title
+- parameters:
+  - title (required unless imdb_id is set)
     - (text, max 50 characters)
-  - format
+  - format (required)
     - one of (DVD|VHS|Streaming)
-  - length
+  - length (required)
     - (integer between 0 and 500)
-  - release_year
+  - release_year (required unless imdb_id is set)
     - (integer between 1800 and 2100)
-  - rating
+  - rating (required unless imdb_id is set)
     - (integer between 1 and 5)
+  - imdb_id (optional)
+    - (alphanumeric IMDB id)
 - JSON response
 ```
 {

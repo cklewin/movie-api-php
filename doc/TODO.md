@@ -29,7 +29,7 @@
     - [ ] (optional) Revert to previous if tests fail
     - [ ] (optional) Alert
 
-- [ ] Query a third party API to get additional movie data
+- [x] Query a third party API to get additional movie data
 
 ## Further considerations
 - The JWT library I'm using doesn't cache the JWK set

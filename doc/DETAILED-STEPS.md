@@ -106,7 +106,9 @@ CREATE TABLE IF NOT EXISTS `movies` (
 ```
 
 ## 5. Configure Jenkins 
-Follow the container logs on the jenkins-node instance to get the Jenkins unlock key
+The TMDB_API_KEY credential will allow access to themoviedb.org API - this is optional, but required to allow the IMDB ID lookup.
+
+Follow the container logs on the jenkins-node instance to get the Jenkins unlock key.
 ```
 sudo su docker -c "docker logs -f jenkins"
 ```
@@ -153,7 +155,10 @@ Go to http://your_jenkins-node_public_ip
             - Kind: Secret text
             - Secret: <YOUR_MYSQL_PASSWORD>
             - ID: MYSQL_PASSWORD
-
+          - Add Credentials (optional)
+            - Kind: Secret text
+            - Secret: <YOUR_TMDB_API_KEY>
+            - ID: TMDB_API_KEY
     - Save
 
 ## Notes

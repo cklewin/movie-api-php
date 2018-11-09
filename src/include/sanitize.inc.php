@@ -41,6 +41,13 @@ function sanitizeMovieParams($args, $required=array()) {
 		$response['messages'][] = 'invalid username: expected alphanumeric string';
 	}
 
+	if (!empty($args['imdb_id']) &&
+		!ctype_alnum($args['imdb_id'])
+		) {
+		$insane = true;
+		$response['messages'][] = 'invalid imdb_id: expected alphanumeric string';
+	}
+
 	if (!empty($args['movie_id']) &&
 		!is_integer($args['movie_id']) &&
 		!ctype_digit($args['movie_id'])

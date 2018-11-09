@@ -7,6 +7,35 @@ function createMovie($username, $args) {
 		'success'	=> false,
 	);
 
+	/*
+	 * if an IMDB id is supplied, fill in left available data
+	 * that was left out using TMDB http://themoviedb.org
+	 *
+	 */
+	if (!empty($args['imdb_id']) &&
+		!empty($_ENV['TMDB_API_KEY'])
+		) {
+		$res = sanitizeMovieParams(array('imdb_id'=>$args['imdb_id']));
+		if ($res['success'] != true) {
+			$response['http_status'] = 400;
+			$response['messages'] = array_merge($response['messages'], $res['messages']);
+			return($response);
+		}
+
+		$tmdb_api_key = $_ENV['TMDB_API_KEY'];
+		$tmdb_api_url = "https://api.themoviedb.org/3/find/$args[imdb_id]?api_key=$tmdb_api_key&external_source=imdb_id";
+		$res = json_decode(file_get_contents("$tmdb_api_url"), true);
+		if (empty($res['movie_results'][0])) {
+			$response['messages'][] = 'failed to find data for that IMDB id';
+		} else {
+			$tmdb_info = $res['movie_results'][0];
+			$tmdb_release_date_parts = explode('-', $tmdb_info['release_date']);
+			$args['title'] = $args['title'] ?: $tmdb_info['title'];
+			$args['rating'] = $args['rating'] ?: (int)round($tmdb_info['vote_average']/2);
+			$args['release_year'] = $args['release_year'] ?: $tmdb_release_date_parts[0];
+		}
+	}
+
 	$res = sanitizeMovieParams(array_merge($args, array('username'=>$username)), MOVIE_CONSTRAINTS['required_params']);
 	if ($res['success'] != true) {
 		$response['http_status'] = 400;
