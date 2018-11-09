@@ -1,6 +1,14 @@
 <?php
 
 define('MOVIE_CONSTRAINTS', array(
+	'sort_fields' => array(
+		'id',
+		'title',
+		'format',
+		'length',
+		'release_year',
+		'rating'
+	),
 	'required_params' => array(
 		'title',
 		'format',

@@ -117,22 +117,41 @@ function deleteMovie($movie_id) {
 	return $response;
 }
 
-function getMovies() {
+function getMovies($params = array()) {
 	$response = array(
 		'http_status'	=> null,
+		'messages'	=> array(),
 		'success'	=> false
 	);
 
+	if (!empty($params)) {
+		$res = sanitizeMovieParams($params);
+		if ($res['success'] != true) {
+			$response['http_status'] = 400;
+			$response['messages'] = array_merge($response['messages'], $res['messages']);
+			return($response);
+		}
+	}
+
 	/*
-	 * TODO: add sort_field and sort_dir
-	 *	for the pager, ask for limit + 1
+	 * TODO: for the pager, ask for limit + 1
 	 *	if the number returned is greater than our limit
 	 *	set the pager to say there are more results
 	 *	remove the last result
 	 *
 	 */
+	$sql = 'SELECT id,title,format,length,release_year,rating FROM movies';
+
+	if (!empty($params['sort_field'])) {
+		if (empty($params['sort_dir'])) {
+			$params['sort_dir'] = 'asc';
+		}
+
+		$sql .= " order by $params[sort_field] $params[sort_dir]";
+	}
+	
 	$db = new Database('read');
-	$results = $db->read('SELECT id,title,format,length,release_year,rating FROM movies');
+	$results = $db->read($sql);
 
 	$response['success'] = true;
 	$response['http_status'] = 200;

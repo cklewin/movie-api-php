@@ -53,7 +53,8 @@ function routeRequest($username, $movie_id) {
 
 		case 'GET':
 			if (empty($movie_id)) {
-				return getMovies();
+				parse_str($_SERVER['REDIRECT_QUERY_STRING'], $parameters);
+				return getMovies($parameters);
 			} else {
 				return getMovie($movie_id);
 			}
