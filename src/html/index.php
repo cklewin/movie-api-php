@@ -9,8 +9,8 @@ require(__DIR__ . '/../include/jwtauth.inc.php');
 
 header('Content-Type: application/json; charset=UTF-8');
 $response = array(
-	'messages' => array(),
-	'success' => false
+	'messages'	=> array(),
+	'success'	=> false
 );
 
 /*

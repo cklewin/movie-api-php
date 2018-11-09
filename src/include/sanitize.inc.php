@@ -19,17 +19,17 @@ function sanitizeMovieParams($args, $required=array()) {
 		$response['messages'][] = 'missing required parameters: ' . join(',', $missing_params);
 	}
 
-        if (!empty($args['sort_field']) &&
-                !in_array($args['sort_field'], MOVIE_CONSTRAINTS['sort_fields'])
-                ) {
+	if (!empty($args['sort_field']) &&
+		!in_array($args['sort_field'], MOVIE_CONSTRAINTS['sort_fields'])
+		) {
 		$insane = true;
 		$response['messages'][] = 'invalid sort_field: expected one of ' . join(',', MOVIE_CONSTRAINTS['sort_fields']);
 	}
 
-        if (!empty($args['sort_dir']) &&
-                $args['sort_dir'] != 'asc' &&
-                $args['sort_dir'] != 'desc'
-                ) {
+	if (!empty($args['sort_dir']) &&
+		$args['sort_dir'] != 'asc' &&
+		$args['sort_dir'] != 'desc'
+		) {
 		$insane = true;
 		$response['messages'][] = 'invalid sort_dir: expected one of (asc|desc)';
 	}

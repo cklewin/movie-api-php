@@ -30,7 +30,7 @@ class Database {
 		$this->mysqli = mysqli_init();
 		$this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
 		$this->mysqli->real_connect($host, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $_ENV['MYSQL_DATABASE']);
-  		$this->mysqli->set_charset("utf8mb4");
+		$this->mysqli->set_charset("utf8mb4");
 
 		return $this->verifyConnection();
 	}

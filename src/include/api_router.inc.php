@@ -38,14 +38,15 @@ function compileRoute() {
 }
 
 function routeRequest($username, $movie_id) {
+	$response = array(
+		'http_status'	=> 400,
+		'messages'	=> array(),
+		'success'	=> false
+	);
 	switch($_SERVER['REQUEST_METHOD']) {
 		case 'POST':
 			if (!empty($movie_id)) {
-				$response = array(
-					'http_status'	=> 400,
-					'messages'	=> array(),
-					'success'	=> false
-				);
+				$response['http_status'] = 400;
 				$response['messages'][] = 'POST method does not accept a movie_id, use PUT to update an existing movie';
 				return($response);
 			}
@@ -55,18 +56,13 @@ function routeRequest($username, $movie_id) {
 			if (empty($movie_id)) {
 				parse_str($_SERVER['REDIRECT_QUERY_STRING'], $parameters);
 				return getMovies($parameters);
-			} else {
-				return getMovie($movie_id);
 			}
+			return getMovie($movie_id);
 
 		case 'PUT':
 			parse_str(file_get_contents('php://input'), $_PUT);
 			if (empty($_PUT)) {
-				$response = array(
-					'http_status'	=> 400,
-					'messages'	=> array(),
-					'success'	=> false
-				);
+				$response['http_status'] = 400;
 				$response['messages'][] = 'missing at least one parameter';
 				return($response);
 			}
@@ -76,11 +72,9 @@ function routeRequest($username, $movie_id) {
 			return deleteMovie($movie_id);
 
 		default:
-			return array(
-				'http_status'	=> 401,
-				'messages'	=> $missing_params,
-				'success'	=> false
-			);
+			$response['http_status'] = 401;
+			$response['messages'][] = 'unsupported method';
+			return $response;
 	}
 }
 
