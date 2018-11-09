@@ -10,7 +10,7 @@
   - [x] Sanitize inputs
   - [x] Verify input parameters
   - [x] Respond to API methods (Create, Read, Update, Delete, List)
-  - [ ] Enable sorting on List
+  - [x] Enable sorting on List
   - [x] Save changes to database
 
 - [x] Restrict API access to authenticated users

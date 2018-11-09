@@ -41,7 +41,7 @@ See [USAGE.md](doc/USAGE.md)
   * [x] Length [time; value between 0 and 500 minutes]
   * [x] Release Year [integer; value between 1800 and 2100]
   * [x] Rating [integer; value between 1 and 5]
-* [ ] On the collection list request, the items in the list must be sortable by movie attributes.
+* [x] On the collection list request, the items in the list must be sortable by movie attributes.
 * [ ] Integrate a third-party web service relevant to the project.
 
 ## Optional
