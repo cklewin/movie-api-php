@@ -64,6 +64,7 @@ pipeline {
                 // get original deploy container
                 PREVIOUS_CONTAINER = sh(returnStdout: true, script: '${SSH_CMD} "docker container ls -f publish=80/tcp -q"').trim()
 		MYSQL_PASSWORD = credentials('MYSQL_PASSWORD') 
+		TMDB_API_KEY = credentials('TMDB_API_KEY') 
             }
             steps {
                 script {
@@ -74,7 +75,7 @@ pipeline {
                     }
                 }
                 // start new container
-                sh '${SSH_CMD} "docker run -d -e \'MYSQL_HOST_READ=${MYSQL_HOST_READ}\' -e \'MYSQL_HOST_WRITE=${MYSQL_HOST_WRITE}\' -e \'MYSQL_DATABASE=${MYSQL_DATABASE}\' -e \'MYSQL_USER=${MYSQL_USER}\' -e \'MYSQL_PASSWORD=${MYSQL_PASSWORD}\' --name ${IMAGE_NAME} -p 80:80 ${IMAGE_NAME}"'
+                sh '${SSH_CMD} "docker run -d -e \'MYSQL_HOST_READ=${MYSQL_HOST_READ}\' -e \'MYSQL_HOST_WRITE=${MYSQL_HOST_WRITE}\' -e \'MYSQL_DATABASE=${MYSQL_DATABASE}\' -e \'MYSQL_USER=${MYSQL_USER}\' -e \'MYSQL_PASSWORD=${MYSQL_PASSWORD}\' -e \'TMDB_API_KEY=${TMDB_API_KEY}\' --name ${IMAGE_NAME} -p 80:80 ${IMAGE_NAME}"'
 
                 // TODO: run final tests
 
